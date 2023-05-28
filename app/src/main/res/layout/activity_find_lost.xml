@@ -17,8 +17,8 @@
         android:entries="@array/building"
         android:gravity="center"
         android:prompt="@string/Buildings"
-        android:background="@drawable/spinner_background"
-
+        android:background="#D3D3D3"
+        android:popupBackground="#D3D3D3"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +31,30 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
+        android:layout_margin="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buildings"
+        android:stretchColumns="*"
+        android:background="@color/white"
+        android:padding="1dp"
         >
+        <TableRow>
+            <TextView
+                android:background="@drawable/tableline"
+                android:text="보관장소"
+                android:padding="3dp"
+                android:textSize="30dp"
+                android:gravity="center"/>
+            <TextView
+                android:background="@drawable/tableline"
+                android:text="거리"
+                android:padding="3dp"
+                android:textSize="30dp"
+                android:gravity="center"/>
+        </TableRow>
+
 
 
     </TableLayout>
