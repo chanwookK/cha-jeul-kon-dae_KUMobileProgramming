@@ -17,10 +17,12 @@
         android:entries="@array/building"
         android:gravity="center"
         android:prompt="@string/Buildings"
+        android:background="@drawable/spinner_background"
+
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TableLayout
         android:id="@+id/tableLayout"
