@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".FindLostActivity">
 
+    <Spinner
+        android:id="@+id/buildings"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="1dp"
+        android:entries="@array/building"
+        android:gravity="center"
+        android:prompt="@string/Buildings"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buildings"
+        >
+
+
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

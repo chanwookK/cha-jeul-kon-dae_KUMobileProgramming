@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Buildings">찾을 공간을 선택하세요.</string>
+    <string-array name="building">
+        <item>도서관</item>
+        <item>공학관</item>
+        <item>신공학관</item>
+    </string-array>
+</resources>
