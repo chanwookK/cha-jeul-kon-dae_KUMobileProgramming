@@ -71,7 +71,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        app:srcCompat="@drawable/Folder"
+        app:srcCompat="@drawable/folder"
         android:layout_width="192dp"
         android:layout_height="192dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
 
     <ImageView
         android:id="@+id/folderImageView"
-        app:srcCompat="@drawable/Folder"
+        app:srcCompat="@drawable/folder"
         android:layout_width="96dp"
         android:layout_height="96dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
 
     <ImageView
         android:id="@+id/fileImageView"
-        app:srcCompat="@drawable/Picture"
+        app:srcCompat="@drawable/picture"
         android:layout_width="96dp"
         android:layout_height="96dp"
         app:layout_constraintStart_toStartOf="parent"
