@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="place_prompt">구장 선택</string>
+    <string-array name="place_array">
+        <item>도서관 자치위원회</item>
+        <item>도서관</item>
+        <item>학생회관</item>
+        <item>새천년관</item>
+        <item>산학협력관</item>
+    </string-array>
+</resources>

@@ -10,7 +10,7 @@
         android:id="@+id/centerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:text="분실물 등록"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="75dp"
         app:layout_constraintTop_toTopOf="@id/centerText"/>
 
     <Button
@@ -87,8 +87,8 @@
         android:layout_height="96dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="125dp"
-        app:layout_constraintHorizontal_bias="0.15"
+        android:layout_marginTop="75dp"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/centerText"/>
 
     <ImageView
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="150dp"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/folderImageView"/>
 
     <Button
