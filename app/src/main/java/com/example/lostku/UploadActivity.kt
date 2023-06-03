@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.BoringLayout
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,14 +30,25 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    fun galleryPermissionGranted()= ActivityCompat.checkSelfPermission(this,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initLayout()
+    }
+
+    fun setStateText(isSetNow : Boolean = false){
+        if(isSetNow)
+            binding.stateText.text = "분실물 정보 등록 준비 완료!"
+        else
+            binding.stateText.text = "아직 분실물 등록 전입니다!"
+    }
+
+    fun setGalleyText(isSetNow : Boolean = false){
+        if(isSetNow)
+            binding.stateText.text = "분실물 이미지 등록 완료!"
+        else
+            binding.stateText.text = "아직 사진 등록 전입니다!"
     }
 
     private fun submitInfo()
@@ -82,7 +94,7 @@ class UploadActivity : AppCompatActivity() {
     private fun submitImg()
     {
         val galleyIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+        startActivityForResult(galleyIntent, GALLERY_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -90,14 +102,22 @@ class UploadActivity : AppCompatActivity() {
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             val selectedImage: Uri? = data.data
             // 선택한 이미지에 대한 처리를 수행합니다.
+            binding.imageView.visibility = View.VISIBLE
             binding.imageView.setImageURI(selectedImage)
             isImgSubmitted = true
+            setGalleyText(true)
         }
     }
 
     private fun initLayout() {
         isInfoSubmitted = false
         isImgSubmitted = false
+
+        // "아직 분실물 등록 전입니다!"
+        setStateText()
+
+        // "아직 사진 등록 전입니다!"
+        setGalleyText()
 
         binding.apply {
 

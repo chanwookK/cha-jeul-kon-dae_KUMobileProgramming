@@ -37,7 +37,8 @@ class UploadDialog(private val context : AppCompatActivity) {
                     uploadActivity.isInfoSubmitted = true
 
                     // 분실물 등록의 텍스트 수정
-                    uploadBinding.stateText.text = "분실물 정보 등록 준비 완료"
+//                    uploadBinding.stateText.text = "분실물 정보 등록 준비 완료"
+                    uploadActivity.setStateText(true)
 
                     dlg.dismiss()
                 }
