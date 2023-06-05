@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".InfoActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="45dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="분실물 보관 장소 리스트"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ListRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
