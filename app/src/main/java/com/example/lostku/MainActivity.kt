@@ -3,6 +3,8 @@ package com.example.lostku
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.lostku.databinding.ActivityMainBinding
 
@@ -36,5 +38,22 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent3)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.actionmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.keywordAlarmBtn ->{
+
+            }
+            R.id.infoBtn ->{
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
