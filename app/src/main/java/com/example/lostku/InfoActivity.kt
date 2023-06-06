@@ -16,6 +16,7 @@ class InfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info)
         init()
         initRecyclerView()
+
     }
 
     private fun init(){
@@ -32,12 +33,10 @@ class InfoActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL, false
         )
         adapter = InfoRecyclerViewAdapter(data)
-        binding.ListRecyclerview.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL, false
-        )
+
 
         binding.ListRecyclerview.adapter = adapter
+
 
     }
 }

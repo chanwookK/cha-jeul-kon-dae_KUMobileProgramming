@@ -13,4 +13,9 @@
         android:icon="@drawable/baseline_info_24"
         android:title="Item"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/drawer"
+        android:icon="@drawable/baseline_menu_24"
+        android:title="Item"
+        app:showAsAction="always" />
 </menu>

@@ -16,17 +16,19 @@ class KeywordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityKeywordBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_keyword)
-        init()
         initRecyclerView()
+        init()
+
+
+
     }
+
     private fun initRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL, false
         )
         adapter = KeywordRecyclerViewAdapter(data)
-
-
 
         //리사이클러 뷰 아이템 클릭시 이벤트 처리
         adapter.itemClickListener = object : KeywordRecyclerViewAdapter.OnItemClickListener {
@@ -36,8 +38,6 @@ class KeywordActivity : AppCompatActivity() {
             override fun OnItemClick(data: KeywordData, index:Int) {
 
             }
-
-
         }
 
         binding.recyclerView.adapter = adapter
