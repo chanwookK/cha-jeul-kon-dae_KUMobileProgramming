@@ -1,5 +1,5 @@
 package com.example.lostku
 
-data class LostData(val name:String, val foundLoc:String, val havingLoc:String, val photo:String, val time:String ) {
-    constructor():this("noinfo","noinfo","noinfo","noinfo","noinfo")
+data class LostData(val id:Int,val name:String, val foundLoc:String, val havingLoc:String, val photo:String, val time:String ) {
+    constructor():this(0,"noinfo","noinfo","noinfo","noinfo","noinfo")
 }
