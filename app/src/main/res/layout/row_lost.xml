@@ -14,7 +14,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/fLocation"
+        android:id="@+id/foundLoc"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/hLocation"
+        android:id="@+id/havingLoc"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -35,7 +35,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/image"
+        android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
