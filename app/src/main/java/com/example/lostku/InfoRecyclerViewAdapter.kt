@@ -8,8 +8,6 @@ import com.example.lostku.databinding.RowInfoBinding
 
 class InfoRecyclerViewAdapter (var items:ArrayList<InfoData>): RecyclerView.Adapter<InfoRecyclerViewAdapter.ViewHolder>() {
 
-
-
     inner class ViewHolder(val binding: RowInfoBinding) : RecyclerView.ViewHolder(binding.root) {
         //OnItemClick 함수를 호출하는 위치
         init {

@@ -3,16 +3,22 @@ package com.example.lostku
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.lostku.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding :ActivityMainBinding
+    lateinit var drawer: DrawerLayout
+    var isDrawerOpen = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        drawer = binding.drawer
         setContentView(binding.root)
         initLayout()
     }
@@ -41,16 +47,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.actionmenu, menu)
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.actionmenu, menu)
+        //menuInflater.inflate(R.menu.actionmenu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when(item.itemId){
             R.id.keywordAlarmBtn ->{
+                val i = Intent(this@MainActivity, KeywordActivity::class.java)
+                startActivity(i)
 
             }
             R.id.infoBtn ->{
+                val i = Intent(this@MainActivity, InfoActivity::class.java)
+                startActivity(i)
+
+            }
+            R.id.drawer ->{
+                isDrawerOpen =! isDrawerOpen
+                if(isDrawerOpen)
+                    drawer.openDrawer(Gravity.RIGHT)
+                else
+                    drawer.closeDrawer(Gravity.RIGHT)
 
             }
         }
