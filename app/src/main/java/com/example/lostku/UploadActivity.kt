@@ -7,15 +7,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.BoringLayout
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.lostku.databinding.ActivityUploadBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.net.URI
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UploadActivity : AppCompatActivity() {
     lateinit var binding : ActivityUploadBinding
+    lateinit var dlg : UploadDialog
 
     var isInfoSubmitted : Boolean = false
     var isImgSubmitted : Boolean = false
@@ -23,6 +34,8 @@ class UploadActivity : AppCompatActivity() {
     val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
 
     val GALLERY_REQUEST_CODE = 1001
+
+    var imageURI : Uri? = null;
 
     val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
         if(!it){
@@ -46,14 +59,14 @@ class UploadActivity : AppCompatActivity() {
 
     fun setGalleyText(isSetNow : Boolean = false){
         if(isSetNow)
-            binding.stateText.text = "분실물 이미지 등록 완료!"
+            binding.pictureText.text = "분실물 이미지 등록 완료!"
         else
-            binding.stateText.text = "아직 사진 등록 전입니다!"
+            binding.pictureText.text = "아직 사진 등록 전입니다!"
     }
 
     private fun submitInfo()
     {
-        var dlg = UploadDialog(this)
+        dlg = UploadDialog(this)
         dlg.show(this)
     }
 
@@ -104,9 +117,14 @@ class UploadActivity : AppCompatActivity() {
             // 선택한 이미지에 대한 처리를 수행합니다.
             binding.imageView.visibility = View.VISIBLE
             binding.imageView.setImageURI(selectedImage)
+            imageURI = selectedImage
             isImgSubmitted = true
             setGalleyText(true)
         }
+    }
+
+    fun getImageUri() : String{
+        return imageURI.toString()
     }
 
     private fun initLayout() {
@@ -143,11 +161,26 @@ class UploadActivity : AppCompatActivity() {
                 }
                 else{
                     // 분실물의 모든 정보 등록한 경우
-                    Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
-                    val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
-                    startActivity(intent1)
 
-                    // TODO : DB에 분실물 정보 넣기.
+                    // TODO: DB에 등록된 child 개수를 받아올 수 있어야 함.
+                    var rdb: DatabaseReference = Firebase.database.getReference("Lost/info") //Lost DB에 info 테이블 생성 후 참조
+
+                    var childrenCount : Long = 0
+                    rdb.get().addOnSuccessListener { snapshot ->
+                        childrenCount = snapshot.childrenCount
+                        Log.i("", "child 개수 : " + childrenCount.toString());
+
+                        val calendar = Calendar.getInstance()
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        val currentTime = dateFormat.format(calendar.time)
+                        var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime)
+
+                        rdb.child(Lost.id.toString()).setValue(Lost)
+
+                        Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
+                        val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
+                        startActivity(intent1)
+                    }
                 }
             }
         }

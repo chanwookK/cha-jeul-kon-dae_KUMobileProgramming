@@ -1,12 +1,15 @@
 package com.example.lostku
 
 import android.app.Dialog
+import android.util.Log
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lostku.databinding.ActivityMainBinding
 import com.example.lostku.databinding.ActivityUploadBinding
 import com.example.lostku.databinding.CustomUploadDlgBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UploadDialog(private val context : AppCompatActivity) {
 
@@ -14,6 +17,9 @@ class UploadDialog(private val context : AppCompatActivity) {
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
 
     lateinit var uploadBinding: ActivityUploadBinding
+
+    lateinit var foundName : String
+    lateinit var foundLoc : String
 
     fun show(uploadActivity: UploadActivity) {
         binding = CustomUploadDlgBinding.inflate(context.layoutInflater)
@@ -37,7 +43,6 @@ class UploadDialog(private val context : AppCompatActivity) {
                     uploadActivity.isInfoSubmitted = true
 
                     // 분실물 등록의 텍스트 수정
-//                    uploadBinding.stateText.text = "분실물 정보 등록 준비 완료"
                     uploadActivity.setStateText(true)
 
                     dlg.dismiss()
@@ -53,7 +58,12 @@ class UploadDialog(private val context : AppCompatActivity) {
 
     private fun isEmptyTextExist() : Boolean{
         if(binding.lostName.text.isEmpty() || binding.findPos.text.isEmpty()) return true
-        else return false
+        else
+        {
+            foundName = binding.lostName.text.toString()
+            foundLoc = binding.findPos.text.toString()
+            return false
+        }
     }
 
     private fun clearText(){
