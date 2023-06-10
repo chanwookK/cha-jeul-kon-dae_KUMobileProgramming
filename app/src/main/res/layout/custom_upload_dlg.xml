@@ -47,6 +47,7 @@
             android:text="보관 장소"/>
 
         <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:entries="@array/place_array"
