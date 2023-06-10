@@ -17,6 +17,7 @@ class LostListActivity : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var adapter: LostRecyclerViewAdapter
     lateinit var rdb:DatabaseReference
+    lateinit var pdb:DatabaseReference
     var findQuery = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,17 @@ class LostListActivity : AppCompatActivity() {
     private fun init() {
         layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false )
         rdb = Firebase.database.getReference("Lost/info") //Lost DB에 info 테이블 생성 후 참조
+//        pdb = Firebase.database.getReference("PW")
+//        pdb.child("총학생회").setValue("Mjg1Ng==")
+//        pdb.child("건국문학예술학생연합").setValue("MzQ5Mgo=")
+//        pdb.child("동아리연합회").setValue("MzQ5NQ==")
+//        pdb.child("학생복지위원회").setValue("NDY1Ng==")
+//        pdb.child("문과대학학생회").setValue("NTI1Nw==")
+//        pdb.child("이과대학학생회").setValue("NTQ3OA==")
+//        pdb.child("건축대학학생회").setValue("NjI1OQ==")
+//        pdb.child("공과대학학생회").setValue("Njk4Mg==")
+//        pdb.child("사회과학대학학생회").setValue("NzU1NA==")
+//        pdb.child("융합과학기술원학생회").setValue("NzcxMw==")
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
         val option
         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
@@ -65,6 +77,11 @@ class LostListActivity : AppCompatActivity() {
                 recyclerView.adapter = adapter
                 adapter.startListening()
                 clearInput()
+            }
+            listBtn.setOnClickListener{
+                adapter = LostRecyclerViewAdapter(option)
+                recyclerView.adapter = adapter
+                adapter.startListening()
             }
 
 
