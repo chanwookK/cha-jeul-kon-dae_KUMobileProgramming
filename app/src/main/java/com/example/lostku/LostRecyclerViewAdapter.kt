@@ -12,15 +12,16 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
 
 
     interface  OnItemClickListener{
-        fun OnItemClick(position: Int)
+        fun OnItemClick(position: Int, data:LostData)
+
     }
 
     var itemClickListener:OnItemClickListener?=null
 
     inner class ViewHolder(val binding : RowLostBinding):RecyclerView.ViewHolder(binding.root){
         init{
-            binding.root.setOnClickListener{
-                itemClickListener!!.OnItemClick(bindingAdapterPosition)
+            binding.deleteBtn.setOnClickListener{
+                itemClickListener!!.OnItemClick(adapterPosition,getItem(adapterPosition))
             }
         }
     }

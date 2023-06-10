@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/deleteBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/baseline_cancel_24" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/row_shape"
         android:textAlignment="center"
@@ -16,7 +26,7 @@
     <TextView
         android:id="@+id/foundLoc"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/row_shape"
 
@@ -27,7 +37,7 @@
     <TextView
         android:id="@+id/havingLoc"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/row_shape"
         android:textAlignment="center"
@@ -37,7 +47,7 @@
     <TextView
         android:id="@+id/photo"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/row_shape"
         android:textAlignment="center"
@@ -47,7 +57,7 @@
     <TextView
         android:id="@+id/time"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:background="@drawable/row_shape"
         android:textAlignment="center"

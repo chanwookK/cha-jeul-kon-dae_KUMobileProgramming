@@ -2,7 +2,9 @@ package com.example.lostku
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityLostListBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -26,14 +28,15 @@ class LostListActivity : AppCompatActivity() {
     private fun init() {
         layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false )
         rdb = Firebase.database.getReference("Lost/info") //Lost DB에 info 테이블 생성 후 참조
-
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
         val option
         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
         adapter = LostRecyclerViewAdapter(option)
         adapter.itemClickListener = object :LostRecyclerViewAdapter.OnItemClickListener{
-            override fun OnItemClick(position: Int) {
-                //recyclerView 클릭했을 때 이벤트 작성
+            override fun OnItemClick(position: Int, data :LostData) {
+                //deleteBtn 클릭했을 때 DB에서 삭제
+                rdb.child(data.id.toString()).removeValue()
+
             }
 
         }
@@ -59,16 +62,12 @@ class LostListActivity : AppCompatActivity() {
                 val option
                         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
                 adapter = LostRecyclerViewAdapter(option)
-                adapter.itemClickListener = object :LostRecyclerViewAdapter.OnItemClickListener{
-                    override fun OnItemClick(position: Int) {
-                        //recyclerView 클릭했을 때 이벤트 작성
-                    }
-
-                }
                 recyclerView.adapter = adapter
                 adapter.startListening()
                 clearInput()
             }
+
+
         }
     }
 
@@ -99,12 +98,6 @@ class LostListActivity : AppCompatActivity() {
                 FirebaseRecyclerOptions.Builder<LostData>().setQuery(query, LostData::class.java)
                     .build()
             adapter = LostRecyclerViewAdapter(option)
-            adapter.itemClickListener = object : LostRecyclerViewAdapter.OnItemClickListener {
-                override fun OnItemClick(position: Int) {
-                    //recyclerView 클릭했을 때 이벤트 작성
-                }
-
-            }
             binding.recyclerView.adapter = adapter
             adapter.startListening()
         }
