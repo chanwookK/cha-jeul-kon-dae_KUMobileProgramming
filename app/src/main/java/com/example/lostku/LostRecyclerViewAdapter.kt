@@ -2,6 +2,7 @@ package com.example.lostku
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
@@ -13,7 +14,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
 
     interface  OnItemClickListener{
         fun OnItemClick(position: Int, data:LostData)
-
+        fun OnPhotoClick(position: Int, data:LostData)
     }
 
     var itemClickListener:OnItemClickListener?=null
@@ -22,6 +23,9 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
         init{
             binding.deleteBtn.setOnClickListener{
                 itemClickListener!!.OnItemClick(adapterPosition,getItem(adapterPosition))
+            }
+            binding.photo.setOnClickListener{
+                itemClickListener!!.OnPhotoClick(adapterPosition,getItem(adapterPosition))
             }
         }
     }
@@ -43,7 +47,8 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             foundLoc.text = model.foundLoc
             havingLoc.text = model.havingLoc
             time.text = model.time
-            photo.text = model.photo
+            //photo.text = model.photo
+            photo.setImageURI(model.photo.toUri())
         }
     }
 

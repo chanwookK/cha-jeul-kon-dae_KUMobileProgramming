@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityLostListBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -19,6 +21,8 @@ class LostListActivity : AppCompatActivity() {
     lateinit var rdb:DatabaseReference
     lateinit var pdb:DatabaseReference
     var findQuery = false
+
+    lateinit var photoDialog: ShowPhotoDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLostListBinding.inflate(layoutInflater)
@@ -41,6 +45,7 @@ class LostListActivity : AppCompatActivity() {
 //        pdb.child("사회과학대학학생회").setValue("NzU1NA==")
 //        pdb.child("융합과학기술원학생회").setValue("NzcxMw==")
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
+        photoDialog = ShowPhotoDialog(this)
         val option
         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
         adapter = LostRecyclerViewAdapter(option)
@@ -49,6 +54,10 @@ class LostListActivity : AppCompatActivity() {
                 //deleteBtn 클릭했을 때 DB에서 삭제
                 rdb.child(data.id.toString()).removeValue()
 
+            }
+
+            override fun OnPhotoClick(position: Int, data: LostData) {
+                photoDialog.show(data.photo.toUri())
             }
 
         }
