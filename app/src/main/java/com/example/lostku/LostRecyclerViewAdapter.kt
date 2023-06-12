@@ -1,5 +1,6 @@
 package com.example.lostku
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -8,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     : FirebaseRecyclerAdapter<LostData,LostRecyclerViewAdapter.ViewHolder>(options){
@@ -42,7 +44,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
-        model: LostData,
+        model: LostData
     ) {
         holder.binding.apply {
             name.text = model.name
@@ -50,9 +52,20 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             havingLoc.text = model.havingLoc
             time.text = model.time
             //photo.text = model.photo
-            //photo.setImageURI(model.photo.toUri())
-            Glide.with(holder.itemView.context).load(model.photo.toUri()).into(photo)
-            Glide.with(holder.itemView).load(model.photo).into(photo)
+            Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
+
+
+//            val storageRef = Firebase.storage.reference
+//            val imageName = "Lost_"+model.id.toString()+".png"
+//            var imageRef = storageRef.child("Lost/info/"+imageName)
+//            Log.i("","imageName : "+"Lost/info/"+imageName)
+//            imageRef.downloadUrl.addOnSuccessListener { uri ->
+//                Glide.with(holder.itemView).load(uri).into(photo)
+////                photo.setImageURI(uri)
+//            }.addOnFailureListener { exception ->
+//                // 이미지 다운로드 URL을 가져오는 데 실패한 경우 호출됩니다.
+//                Log.e("FirebaseStorage", "Failed to retrieve image URL: ${exception.message}")
+//            }
         }
     }
 

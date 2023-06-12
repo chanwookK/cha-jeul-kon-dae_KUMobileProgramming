@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.ktx.storage
 import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
@@ -173,6 +175,21 @@ class UploadActivity : AppCompatActivity() {
                         val calendar = Calendar.getInstance()
                         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         val currentTime = dateFormat.format(calendar.time)
+                        val storageRef = Firebase.storage.reference
+                        val imageName = "Lost_"+childrenCount.toString()+".png"
+                        val imageRef = storageRef.child("Lost/info/"+imageName)
+                        val uploadTask : UploadTask = imageRef.putFile(imageURI!!)
+                        uploadTask.addOnSuccessListener {
+                            // 이미지 업로드가 성공한 경우 호출됩니다.
+                            // 업로드된 이미지에 대한 URL을 가져올 수 있습니다.
+                            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                                imageURI = uri
+                            }
+                        }.addOnFailureListener { exception ->
+                            // 이미지 업로드가 실패한 경우 호출됩니다.
+                            Log.e("FirebaseStorage", "Failed to upload image: ${exception.message}")
+                        }
+
                         var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime)
 
                         rdb.child(Lost.id.toString()).setValue(Lost)
