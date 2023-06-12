@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityLostListBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.ktx.storage
 
 class LostListActivity : AppCompatActivity() {
     lateinit var binding : ActivityLostListBinding
@@ -18,7 +22,10 @@ class LostListActivity : AppCompatActivity() {
     lateinit var adapter: LostRecyclerViewAdapter
     lateinit var rdb:DatabaseReference
     lateinit var pdb:DatabaseReference
+
     var findQuery = false
+
+    lateinit var photoDialog: ShowPhotoDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLostListBinding.inflate(layoutInflater)
@@ -41,6 +48,8 @@ class LostListActivity : AppCompatActivity() {
 //        pdb.child("사회과학대학학생회").setValue("NzU1NA==")
 //        pdb.child("융합과학기술원학생회").setValue("NzcxMw==")
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
+        photoDialog = ShowPhotoDialog(this)
+
         val option
         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
         adapter = LostRecyclerViewAdapter(option)
@@ -51,19 +60,23 @@ class LostListActivity : AppCompatActivity() {
 
             }
 
+            override fun OnPhotoClick(position: Int, data: LostData) {
+                photoDialog.show(data.photo.toUri())
+            }
+
         }
         binding.apply {
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = adapter
             //더미데이터 생성
-            val lost1 = LostData(1,"test1","test1","test1","test1","test1")
-            val lost2 = LostData(2,"test2","test2","test2","test2","test2")
-            val lost3 = LostData(3,"test3","test3","test3","test3","test3")
-            val lost4 = LostData(4,"test4","test4","test4","test4","test4")
-            rdb.child("1").setValue(lost1)
-            rdb.child("2").setValue(lost2)
-            rdb.child("3").setValue(lost3)
-            rdb.child("4").setValue(lost4)
+//            val lost1 = LostData(1,"test1","test1","test1","test1","test1")
+//            val lost2 = LostData(2,"test2","test2","test2","test2","test2")
+//            val lost3 = LostData(3,"test3","test3","test3","test3","test3")
+//            val lost4 = LostData(4,"test4","test4","test4","test4","test4")
+//            rdb.child("1").setValue(lost1)
+//            rdb.child("2").setValue(lost2)
+//            rdb.child("3").setValue(lost3)
+//            rdb.child("4").setValue(lost4)
 
             searchBtn.setOnClickListener{
                 if(!findQuery)
