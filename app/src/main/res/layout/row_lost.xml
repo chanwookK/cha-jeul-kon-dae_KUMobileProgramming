@@ -43,17 +43,7 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold" />
-<!--    <ImageView-->
-<!--        android:id="@+id/photo"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:background="@drawable/row_shape"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="16sp"-->
-<!--        android:textStyle="bold" />-->
-
-    <TextView
+    <ImageView
         android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -62,6 +52,16 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/photo"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:background="@drawable/row_shape"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold" />-->
 
     <TextView
         android:id="@+id/time"

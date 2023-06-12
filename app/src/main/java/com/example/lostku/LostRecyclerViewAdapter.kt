@@ -2,12 +2,12 @@ package com.example.lostku
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import kotlinx.coroutines.withContext
+
 
 class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     : FirebaseRecyclerAdapter<LostData,LostRecyclerViewAdapter.ViewHolder>(options){
@@ -46,7 +46,8 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             foundLoc.text = model.foundLoc
             havingLoc.text = model.havingLoc
             time.text = model.time
-            photo.text = model.photo
+            //photo.text = model.photo
+            photo.setImageURI(model.photo.toUri())
         }
     }
 
