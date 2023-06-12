@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="20dp"
+    tools:context=".UploadDialog">
+
+    <Button
+        android:id="@+id/exitBtn"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
+        android:text="나가기"/>
+    <ImageView
+        android:id="@+id/myPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+</LinearLayout>

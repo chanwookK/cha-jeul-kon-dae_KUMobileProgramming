@@ -167,11 +167,11 @@ class UploadActivity : AppCompatActivity() {
 
                     var childrenCount : Long = 0
                     rdb.get().addOnSuccessListener { snapshot ->
-                        childrenCount = snapshot.childrenCount
+                        childrenCount = snapshot.childrenCount + 1
                         Log.i("", "child 개수 : " + childrenCount.toString());
 
                         val calendar = Calendar.getInstance()
-                        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         val currentTime = dateFormat.format(calendar.time)
                         var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime)
 

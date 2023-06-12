@@ -15,7 +15,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
 
     interface  OnItemClickListener{
         fun OnItemClick(position: Int, data:LostData)
-
+        fun OnPhotoClick(position: Int, data:LostData)
     }
 
     var itemClickListener:OnItemClickListener?=null
@@ -24,6 +24,9 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
         init{
             binding.deleteBtn.setOnClickListener{
                 itemClickListener!!.OnItemClick(adapterPosition,getItem(adapterPosition))
+            }
+            binding.photo.setOnClickListener{
+                itemClickListener!!.OnPhotoClick(adapterPosition,getItem(adapterPosition))
             }
         }
     }
