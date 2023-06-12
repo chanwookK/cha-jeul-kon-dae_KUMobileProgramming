@@ -3,9 +3,11 @@ package com.example.lostku
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import kotlinx.coroutines.withContext
 
 class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     : FirebaseRecyclerAdapter<LostData,LostRecyclerViewAdapter.ViewHolder>(options){
@@ -37,6 +39,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
         holder: ViewHolder,
         position: Int,
         model: LostData
+
     ) {
         holder.binding.apply {
             name.text = model.name
