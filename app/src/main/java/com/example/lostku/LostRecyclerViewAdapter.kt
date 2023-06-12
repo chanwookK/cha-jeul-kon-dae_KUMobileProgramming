@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -41,8 +42,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
-        model: LostData
-
+        model: LostData,
     ) {
         holder.binding.apply {
             name.text = model.name
@@ -50,7 +50,9 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             havingLoc.text = model.havingLoc
             time.text = model.time
             //photo.text = model.photo
-            photo.setImageURI(model.photo.toUri())
+            //photo.setImageURI(model.photo.toUri())
+            Glide.with(holder.itemView.context).load(model.photo.toUri()).into(photo)
+            Glide.with(holder.itemView).load(model.photo).into(photo)
         }
     }
 
