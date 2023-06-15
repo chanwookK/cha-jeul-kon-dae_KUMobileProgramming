@@ -1,30 +1,63 @@
 package com.example.lostku
 
 
-import android.app.ProgressDialog.show
-import android.graphics.Color
-import android.location.Geocoder
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.lostku.databinding.ActivityFindLostBinding
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class FindLostActivity : AppCompatActivity() {
-    lateinit var binding: ActivityFindLostBinding
 
+    lateinit var binding: ActivityFindLostBinding
     var LData : ArrayList<SaveLocation> = ArrayList()
     var location=0
+    var cur_lat: Double? = null
+    var cur_lon: Double? = null
+    private val R2 = 6372.8 * 1000
+    private val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            if (ContextCompat.checkSelfPermission(this@FindLostActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                val loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    ?: locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                cur_lat = loc_Current?.latitude
+                cur_lon = loc_Current?.longitude
+
+                Log.d("Location Update", "Latitude: $cur_lat, Longitude: $cur_lon")
+
+                initlists()
+            }
+        }
+
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFindLostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initlists()
+
         initLayout()
     }
+
+
 
     private fun makeTable() {
 
@@ -63,72 +96,41 @@ class FindLostActivity : AppCompatActivity() {
         while (scan.hasNextLine())
         {
             val name = scan.nextLine()
-            val locations = scan.nextLine().toInt() - location
-            LData.add(SaveLocation(name, locations))
+
+            val location1 = scan.nextLine().toDouble()
+            val location2 =scan.nextLine().toDouble()
+            var location3 = getDistance(cur_lat!!, cur_lon!!,location1,location2)
+            LData.add(SaveLocation(name, location3.toInt()))
 
         }
-
+        Toast.makeText(this, "Latitude: $cur_lat, Longitude: $cur_lon", Toast.LENGTH_SHORT).show()
         makeTable()
+    }
+    fun getDistance( lat1: Double, lng1:Double, lat2:Double, lng2:Double) : Float{
 
+        val myLoc = Location(LocationManager.NETWORK_PROVIDER)
+        val targetLoc = Location(LocationManager.NETWORK_PROVIDER)
+        myLoc.latitude= lat1
+        myLoc.longitude = lng1
+
+        targetLoc.latitude= lat2
+        targetLoc.longitude = lng2
+
+        return myLoc.distanceTo(targetLoc)
     }
 
 
     private fun initLayout() {
-        var sData = resources.getStringArray(R.array.building)
-        var sadapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sData)
-        binding.buildings.adapter = sadapter
-        binding.buildings.setOnItemSelectedListener(CustomOnItemSelectedListener())
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+            initlists()
+        } else {
+            val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER?: LocationManager.GPS_PROVIDER, 0L, 0f, locationListener)
+        }
 
-
-
-
-// LocationManager 객체를 가져옵니다.
-//        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-//
-//// 사용자의 현재 위치를 가져옵니다.
-//        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-//
-//// 가까운 장소를 검색합니다.
-//        val geocoder = Geocoder(this)
-//        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-//
-//// 검색된 주소를 표에 표시합니다.
-
-
-//
-//
        }
 
-    inner class CustomOnItemSelectedListener: AdapterView.OnItemSelectedListener{
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            /*Toast.makeText(parent?.context,parent?.getItemAtPosition(position).toString(),
-            Toast.LENGTH_SHORT).show()
-            binding.recyclerView.adapter = MyCafeteriaAdapter(CData)*/
-            when (position) {
-                0 -> {Toast.makeText(this@FindLostActivity,"0!!!",Toast.LENGTH_SHORT).show()
-                        location = 5
-                        initlists()
-
-                        }
-                    //binding.recyclerView.adapter = adapter1
-                1 -> {
-                    Toast.makeText(this@FindLostActivity, "1!!!", Toast.LENGTH_SHORT).show()
-                    location = 7
-                        initlists()
-                    }
-
-                2 -> {
-                    Toast.makeText(this@FindLostActivity, "2!!!", Toast.LENGTH_SHORT).show()
-                    location = 9
-                        initlists()
-                    }
-            }
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("Not yet implemented")
-        }
-
-    }
+//
 }
