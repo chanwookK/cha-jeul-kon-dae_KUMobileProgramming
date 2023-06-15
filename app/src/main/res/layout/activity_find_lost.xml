@@ -6,55 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".FindLostActivity">
 
-    <Spinner
+
+    <TextView
         android:id="@+id/buildings"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginBottom="1dp"
-        android:entries="@array/building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:gravity="center"
-        android:prompt="@string/Buildings"
-        android:background="#D3D3D3"
-        android:popupBackground="#D3D3D3"
+        android:text="가장 가까운 건물 순입니다."
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="1dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:layout_margin="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white"
+        android:padding="1dp"
+        android:stretchColumns="*"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buildings"
-        android:stretchColumns="*"
-        android:background="@color/white"
-        android:padding="1dp"
-        >
-        <TableRow>
-            <TextView
-                android:background="@drawable/tableline"
-                android:text="보관장소"
-                android:padding="3dp"
-                android:textSize="30dp"
-                android:gravity="center"/>
-            <TextView
-                android:background="@drawable/tableline"
-                android:text="거리"
-                android:padding="3dp"
-                android:textSize="30dp"
-                android:gravity="center"/>
-        </TableRow>
+        app:layout_constraintTop_toBottomOf="@+id/buildings">
 
+        <TableRow>
+
+            <TextView
+                android:background="@drawable/tableline"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="보관장소"
+                android:textSize="30dp" />
+
+            <TextView
+                android:background="@drawable/tableline"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="거리"
+                android:textSize="30dp" />
+        </TableRow>
 
 
     </TableLayout>
