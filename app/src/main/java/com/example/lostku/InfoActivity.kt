@@ -2,6 +2,9 @@ package com.example.lostku
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityInfoBinding
@@ -13,14 +16,17 @@ class InfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_info)
+        setContentView(binding.root)
         init()
         initRecyclerView()
 
+
     }
 
+
+
     private fun init(){
-        data.add(InfoData("분실물 보관 단체", "위치"))
+
         data.add(InfoData("중앙동아리연합회", "제2학생회관 218호"))
         data.add(InfoData("중앙동아리연합회", "제2학생회관 218호"))
         data.add(InfoData("중앙동아리연합회", "제2학생회관 218호"))
