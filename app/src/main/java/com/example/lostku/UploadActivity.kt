@@ -8,14 +8,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.BoringLayout
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.example.lostku.databinding.ActivityUploadBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -111,6 +110,30 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
+    // 프로그레스바 보이기
+    private fun showProgressBar() {
+        val pBar = findViewById<ProgressBar>(R.id.progressBar)
+        blockLayoutTouch()
+        pBar.isVisible = true
+    }
+
+    // 프로그레스바 숨기기
+    private fun hideProgressBar() {
+        val pBar = findViewById<ProgressBar>(R.id.progressBar)
+        clearBlockLayoutTouch()
+        pBar.isVisible = false
+    }
+
+    // 화면 터치 막기
+    private fun blockLayoutTouch() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    // 화면 터치 풀기
+    private fun clearBlockLayoutTouch() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
     private fun submitImg()
     {
         val galleyIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -137,6 +160,8 @@ class UploadActivity : AppCompatActivity() {
     private fun initLayout() {
         isInfoSubmitted = false
         isImgSubmitted = false
+
+        hideProgressBar()
 
         // "아직 분실물 등록 전입니다!"
         setStateText()
@@ -171,6 +196,7 @@ class UploadActivity : AppCompatActivity() {
 
                     // TODO: DB에 등록된 child 개수를 받아올 수 있어야 함.
                     var rdb: DatabaseReference = Firebase.database.getReference("Lost/info") //Lost DB에 info 테이블 생성 후 참조
+                    showProgressBar()
 
                     var childrenCount : Long = 0
                     rdb.get().addOnSuccessListener { snapshot ->
@@ -185,23 +211,31 @@ class UploadActivity : AppCompatActivity() {
                         val imageRef = storageRef.child("Lost/info/"+imageName)
                         val uploadTask : UploadTask = imageRef.putFile(imageURI!!)
                         uploadTask.addOnSuccessListener {
+                                taskSnapshot->
+
                             // 이미지 업로드가 성공한 경우 호출됩니다.
                             // 업로드된 이미지에 대한 URL을 가져올 수 있습니다.
                             imageRef.downloadUrl.addOnSuccessListener { uri ->
                                 imageURI = uri
                             }
+                            val downloadUrl = taskSnapshot.metadata?.reference?.downloadUrl
+                            imageURI = Uri.parse(downloadUrl?.toString())
+                            Log.i("", "URI : "+imageURI.toString())
+                            var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime, password!!)
+
+                            rdb.child(Lost.id.toString()).setValue(Lost)
+
+                            hideProgressBar()
+                            Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
+                            val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
+                            startActivity(intent1)
+//                            imageRef.downloadUrl.addOnSuccessListener { uri ->
+//                                imageURI = uri
+//                            }
                         }.addOnFailureListener { exception ->
                             // 이미지 업로드가 실패한 경우 호출됩니다.
                             Log.e("FirebaseStorage", "Failed to upload image: ${exception.message}")
                         }
-
-                        var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime, password!!)
-
-                        rdb.child(Lost.id.toString()).setValue(Lost)
-
-                        Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
-                        val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
-                        startActivity(intent1)
                     }
                 }
             }

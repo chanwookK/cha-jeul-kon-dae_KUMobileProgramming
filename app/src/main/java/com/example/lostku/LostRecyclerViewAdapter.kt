@@ -6,13 +6,20 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.net.URL
 
 
 class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     : FirebaseRecyclerAdapter<LostData,LostRecyclerViewAdapter.ViewHolder>(options){
+    lateinit var rdb: DatabaseReference
 
 
     interface  OnItemClickListener{
@@ -45,15 +52,21 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
         position: Int,
         model: LostData
     ) {
+        val storageRef = Firebase.storage.reference
         holder.binding.apply {
             name.text = model.name
             foundLoc.text = model.foundLoc
             havingLoc.text = model.havingLoc
             time.text = model.time
             //photo.text = model.photo
-            Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
-
-            Log.i("","password : "+model.password)
+            val filename = "Lost_"+model.id.toString()+".png"
+            val imageRef = storageRef.child("Lost/info/"+filename) // 이미지의 경로
+            val uri = imageRef.toString() // URI를 문자열로 가져옴
+            Glide.with(holder.itemView).load(uri.toUri()).into(photo)
+//            Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
+//            Glide.with(holder.itemView).load(URL(model.photo)).diskCacheStrategy(DiskCacheStrategy.ALL).into(photo)
+//            Log.i("","password : "+model.password)
+            Log.i("", "photo : "+model.photo)
 
 //            val storageRef = Firebase.storage.reference
 //            val imageName = "Lost_"+model.id.toString()+".png"

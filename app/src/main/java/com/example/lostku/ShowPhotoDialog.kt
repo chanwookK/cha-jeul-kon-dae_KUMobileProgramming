@@ -36,9 +36,4 @@ class ShowPhotoDialog (private val context : AppCompatActivity){
             }
         }
     }
-
-    private fun setImage(index : Int)
-    {
-
-    }
 }
