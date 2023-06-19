@@ -70,7 +70,10 @@ class FindLostActivity : AppCompatActivity() {
                     startLocationUpdate()
                 }
                 else -> {
-                    setCurrentLocation(loc)
+                    //권한이 거부되었을 때 MainActivity로 이동
+                    Toast.makeText(this, "위치 권한 설정을 해주세요!",Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
@@ -187,9 +190,10 @@ class FindLostActivity : AppCompatActivity() {
         builder.setNegativeButton("취소",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.dismiss()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             })
         builder.create().show()
-
     }
 
     private fun showPermissionRequestDlg() {
@@ -201,12 +205,12 @@ class FindLostActivity : AppCompatActivity() {
         )
         builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
             locationPermissionRequest.launch(permissions)
-
         })
         builder.setNegativeButton("취소",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.dismiss()
-
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             })
         builder.create().show()
     }
