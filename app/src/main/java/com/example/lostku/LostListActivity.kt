@@ -142,12 +142,7 @@ class LostListActivity : AppCompatActivity() {
             }
 
             override fun OnPhotoClick(position: Int, data: LostData) {
-                val filename = "Lost_"+data.id.toString()+".png"
-                val imageRef = rdb.child(filename) // 이미지의 경로
-                val uri = imageRef.toString() // URI를 문자열로 가져옴
-                Log.i("", "fileURI : "+uri)
-                photoDialog.show(uri.toUri())
-//                photoDialog.show(data.photo.toUri())
+                photoDialog.show(data.photo.toUri())
             }
 
         }

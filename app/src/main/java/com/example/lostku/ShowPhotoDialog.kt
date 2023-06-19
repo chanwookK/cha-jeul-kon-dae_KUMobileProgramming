@@ -19,7 +19,6 @@ class ShowPhotoDialog (private val context : AppCompatActivity){
 
     fun show(photoUri : Uri){
         binding = CustomImageDlgBinding.inflate(context.layoutInflater)
-        rdb = Firebase.database.getReference("Lost/info")
 
 //        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(binding.root)                    //다이얼로그에 사용할 xml 파일을 불러옴

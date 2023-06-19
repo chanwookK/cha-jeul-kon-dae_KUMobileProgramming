@@ -134,10 +134,9 @@ class UploadActivity : AppCompatActivity() {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    private fun submitImg()
-    {
-        val galleyIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleyIntent, GALLERY_REQUEST_CODE)
+    private fun submitImg() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -211,27 +210,21 @@ class UploadActivity : AppCompatActivity() {
                         val imageRef = storageRef.child("Lost/info/"+imageName)
                         val uploadTask : UploadTask = imageRef.putFile(imageURI!!)
                         uploadTask.addOnSuccessListener {
-                                taskSnapshot->
-
                             // 이미지 업로드가 성공한 경우 호출됩니다.
-                            // 업로드된 이미지에 대한 URL을 가져올 수 있습니다.
                             imageRef.downloadUrl.addOnSuccessListener { uri ->
+                                // 이미지 다운로드 URL이 준비된 상태에서 LostData 객체를 생성하고 업로드합니다.
                                 imageURI = uri
+                                val Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime, password!!)
+                                rdb.child(Lost.id.toString()).setValue(Lost)
+
+                                hideProgressBar()
+                                Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
+                                val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
+                                startActivity(intent1)
+                            }.addOnFailureListener { exception ->
+                                // 이미지 다운로드 URL을 얻는 데 실패한 경우 호출됩니다.
+                                Log.e("FirebaseStorage", "Failed to get download URL: ${exception.message}")
                             }
-                            val downloadUrl = taskSnapshot.metadata?.reference?.downloadUrl
-                            imageURI = Uri.parse(downloadUrl?.toString())
-                            Log.i("", "URI : "+imageURI.toString())
-                            var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime, password!!)
-
-                            rdb.child(Lost.id.toString()).setValue(Lost)
-
-                            hideProgressBar()
-                            Toast.makeText(this@UploadActivity, "분실물 등록 완료!!", Toast.LENGTH_SHORT).show()
-                            val intent1 = Intent(this@UploadActivity, MainActivity::class.java)
-                            startActivity(intent1)
-//                            imageRef.downloadUrl.addOnSuccessListener { uri ->
-//                                imageURI = uri
-//                            }
                         }.addOnFailureListener { exception ->
                             // 이미지 업로드가 실패한 경우 호출됩니다.
                             Log.e("FirebaseStorage", "Failed to upload image: ${exception.message}")

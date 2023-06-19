@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/union"
-                android:layout_width="138dp"
+                android:layout_width="158dp"
                 android:layout_height="50dp"
                 android:background="@drawable/keyword_background"
                 android:padding="10dp"
@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="139dp"
+                android:layout_width="158dp"
                 android:layout_height="50dp"
                 android:padding="10dp"
                 android:text="위치"

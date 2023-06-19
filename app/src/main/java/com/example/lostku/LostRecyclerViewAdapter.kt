@@ -59,11 +59,11 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             havingLoc.text = model.havingLoc
             time.text = model.time
             //photo.text = model.photo
-            val filename = "Lost_"+model.id.toString()+".png"
-            val imageRef = storageRef.child("Lost/info/"+filename) // 이미지의 경로
-            val uri = imageRef.toString() // URI를 문자열로 가져옴
-            Glide.with(holder.itemView).load(uri.toUri()).into(photo)
-//            Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
+//            val filename = "Lost_"+model.id.toString()+".png"
+//            val imageRef = storageRef.child("Lost/info/"+filename) // 이미지의 경로
+//            val uri = imageRef.toString() // URI를 문자열로 가져옴
+//            Glide.with(holder.itemView).load(uri.toUri()).into(photo)
+            Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
 //            Glide.with(holder.itemView).load(URL(model.photo)).diskCacheStrategy(DiskCacheStrategy.ALL).into(photo)
 //            Log.i("","password : "+model.password)
             Log.i("", "photo : "+model.photo)
