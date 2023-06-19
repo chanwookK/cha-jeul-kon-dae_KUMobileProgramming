@@ -9,6 +9,9 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -261,6 +264,23 @@ class FindLostActivity : AppCompatActivity() {
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
         return r * c
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.actiongamyen, menu)
+        //menuInflater.inflate(R.menu.actionmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.home ->{
+                val i = Intent(this@FindLostActivity, MainActivity::class.java)
+                startActivity(i)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

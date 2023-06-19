@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.lostku.databinding.ActivityMainBinding
 import com.google.firebase.database.DatabaseReference
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         drawer = binding.drawer
         setContentView(binding.root)
+
         initLayout()
     }
 

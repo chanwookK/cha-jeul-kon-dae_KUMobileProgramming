@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.BoringLayout
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -203,5 +206,22 @@ class UploadActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.actiongamyen, menu)
+        //menuInflater.inflate(R.menu.actionmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.home ->{
+                val i = Intent(this@UploadActivity, MainActivity::class.java)
+                startActivity(i)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

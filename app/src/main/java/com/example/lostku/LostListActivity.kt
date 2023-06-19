@@ -10,8 +10,7 @@ import android.text.InputType
 import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.LayoutInflater
+import android.view.*
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -210,5 +209,22 @@ class LostListActivity : AppCompatActivity() {
             binding.recyclerView.adapter = adapter
             adapter.startListening()
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.actiongamyen, menu)
+        //menuInflater.inflate(R.menu.actionmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.home ->{
+                val i = Intent(this@LostListActivity, MainActivity::class.java)
+                startActivity(i)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
