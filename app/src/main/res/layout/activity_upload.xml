@@ -76,7 +76,7 @@
         android:layout_height="192dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="95dp"
         app:layout_constraintHorizontal_bias="0.875"
         app:layout_constraintTop_toTopOf="@id/pictureText"/>
 
@@ -115,5 +115,14 @@
         android:background="@drawable/color_btn"
         android:text="제출"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

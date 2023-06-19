@@ -2,10 +2,15 @@
 <resources>
     <string name="place_prompt">구장 선택</string>
     <string-array name="place_array">
-        <item>도서관 자치위원회</item>
-        <item>도서관</item>
-        <item>학생회관</item>
-        <item>새천년관</item>
-        <item>산학협력관</item>
+        <item>총학생회</item>
+        <item>건국문학예술학생연합</item>
+        <item>동아리연합회</item>
+        <item>학생복지위원회</item>
+        <item>문과대학학생회</item>
+        <item>이과대학학생회</item>
+        <item>건축대학학생회</item>
+        <item>공과대학학생회</item>
+        <item>사회과학대학학생회</item>
+        <item>융합과학기술원학생회</item>
     </string-array>
 </resources>
