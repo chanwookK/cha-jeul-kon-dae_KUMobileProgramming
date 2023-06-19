@@ -1,5 +1,6 @@
 package com.example.lostku
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,6 +60,14 @@ class LostListActivity : AppCompatActivity() {
 //        pdb.child("비밀번호").setValue("NzcxMw==")//융합과학기술원학생회
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
         photoDialog = ShowPhotoDialog(this)
+
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK)
+            {
+                val password = it.data?.getSerializableExtra("PASSWORD") as String
+
+            }
+        }
 
         val option
         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()

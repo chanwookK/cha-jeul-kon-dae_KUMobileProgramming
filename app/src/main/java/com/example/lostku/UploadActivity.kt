@@ -32,6 +32,7 @@ class UploadActivity : AppCompatActivity() {
 
     var isInfoSubmitted : Boolean = false
     var isImgSubmitted : Boolean = false
+    var password : String? = ""
 
     val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
 
@@ -49,7 +50,7 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var password = intent.getStringExtra("PASSWORD")
+        password = intent.getStringExtra("PASSWORD")
         initLayout()
     }
 
@@ -191,7 +192,7 @@ class UploadActivity : AppCompatActivity() {
                             Log.e("FirebaseStorage", "Failed to upload image: ${exception.message}")
                         }
 
-                        var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime)
+                        var Lost = LostData(childrenCount.toInt(), dlg.binding.lostName.text.toString(), dlg.binding.findPos.text.toString(), dlg.binding.spinner.selectedItem.toString(), getImageUri(),  currentTime, password!!)
 
                         rdb.child(Lost.id.toString()).setValue(Lost)
 
