@@ -14,7 +14,9 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="가장 가까운 건물 순입니다."
+        android:textColor="@color/black"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,14 +45,18 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="보관장소"
-                android:textSize="30dp" />
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:background="@drawable/tableline"
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="거리"
-                android:textSize="30dp" />
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:textStyle="bold"/>
         </TableRow>
 
 
