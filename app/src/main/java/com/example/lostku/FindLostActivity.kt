@@ -267,7 +267,7 @@ class FindLostActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.actiongamyen, menu)
+        inflater.inflate(R.menu.actioninfo, menu)
         //menuInflater.inflate(R.menu.actionmenu, menu)
         return true
     }
@@ -279,7 +279,12 @@ class FindLostActivity : AppCompatActivity() {
                 val i = Intent(this@FindLostActivity, MainActivity::class.java)
                 startActivity(i)
             }
+            R.id.info ->{
+                val i = Intent(this@FindLostActivity, InfoActivity::class.java)
+                startActivity(i)
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 
