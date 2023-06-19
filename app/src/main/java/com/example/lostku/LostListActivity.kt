@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityLostListBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.UploadTask
@@ -164,7 +165,25 @@ class LostListActivity : AppCompatActivity() {
                     findQuery = true
                 if(adapter!=null)
                     adapter.stopListening()
-                val query = rdb.orderByChild("name").equalTo(searchText.text.toString())
+
+                var query : Query
+
+                // 특정 비밀번호 사용자가 올린 것만 보여주는 용도.
+                if(searchText.text.toString().contains("#"))
+                {
+                    val searchPassword = searchText.text.toString().split("#")[1]
+                    query = rdb.orderByChild("password").equalTo(searchPassword)
+                }
+                else if(searchText.text.toString().contains("$"))
+                {
+                    // 특정 월에 대해서만 보여주는 용도
+                    val searchTime = searchText.text.toString().split("$")[1]
+                    query = rdb.orderByChild("time").startAt(searchTime)
+                }
+                else
+                {
+                    query = rdb.orderByChild("name").equalTo(searchText.text.toString())
+                }
                 val option
                         = FirebaseRecyclerOptions.Builder<LostData>().setQuery(query,LostData::class.java).build()
                 adapter = LostRecyclerViewAdapter(option)
