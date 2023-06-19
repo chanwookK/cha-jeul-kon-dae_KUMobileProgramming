@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostku.databinding.ActivityLostListBinding
@@ -191,6 +192,17 @@ class LostListActivity : AppCompatActivity() {
                 adapter.startListening()
                 clearInput()
             }
+
+            searchBtn.setOnLongClickListener{
+                AlertDialog.Builder(this@LostListActivity)
+                    .setTitle("도움말")
+                    .setMessage("$ 년도-월 형태로 입력하면 해당 월의 결과만 나옵니다.\n ex)$2023-06")
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show()
+                true
+            }
+
+
             listBtn.setOnClickListener{
                 adapter = LostRecyclerViewAdapter(option)
                 recyclerView.adapter = adapter
