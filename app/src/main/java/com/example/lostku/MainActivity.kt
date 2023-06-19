@@ -1,5 +1,6 @@
 package com.example.lostku
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -94,8 +95,10 @@ class MainActivity : AppCompatActivity() {
 
                             if (isPasswordCorrect) {
                                 //deleteBtn 클릭했을 때 DB에서 삭제
-                                val intent1 = Intent(this@MainActivity, UploadActivity::class.java)
-                                startActivity(intent1)
+                                val intent = Intent(this@MainActivity, UploadActivity::class.java)
+                                intent.putExtra("PASSWORD", password)
+                                setResult(Activity.RESULT_OK, intent)
+                                startActivity(intent)
                             } else {
                                 Toast.makeText(applicationContext, "비밀번호가 잘못되었습니다", Toast.LENGTH_SHORT).show()
                             }

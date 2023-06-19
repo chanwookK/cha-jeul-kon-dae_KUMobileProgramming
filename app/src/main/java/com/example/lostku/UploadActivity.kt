@@ -49,6 +49,7 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var password = intent.getStringExtra("PASSWORD")
         initLayout()
     }
 
