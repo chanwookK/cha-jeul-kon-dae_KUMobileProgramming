@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.util.Base64
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.Menu
@@ -17,11 +18,16 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.lostku.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding :ActivityMainBinding
     lateinit var drawer: DrawerLayout
     var isDrawerOpen = false
+    lateinit var pdb: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initLayout() {
+        pdb = Firebase.database.getReference("PW")
         binding.apply {
             ListBtn.setOnClickListener {
                 val intent1 = Intent(this@MainActivity, LostListActivity::class.java)
@@ -59,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 layout.addView(input)
 
                 // Create AlertDialog with custom view
-                val dialog = AlertDialog.Builder(this@MainActivity)
+                val dialog = android.app.AlertDialog.Builder(this@MainActivity)
                     .setTitle("비밀번호 입력")
                     .setMessage("비밀번호를 입력하세요")
                     .setView(layout)
@@ -67,11 +74,33 @@ class MainActivity : AppCompatActivity() {
                         // 비밀번호를 처리하는 코드
                         val password = input.text.toString()
                         // 비밀번호 확인
-                        if (password == "1234") {  // 실제 비밀번호로 변경
-                            val intent3 = Intent(this@MainActivity, UploadActivity::class.java)
-                            startActivity(intent3)
-                        } else {
-                            Toast.makeText(applicationContext, "비밀번호가 잘못되었습니다", Toast.LENGTH_SHORT).show()
+                        pdb.get().addOnSuccessListener { dataSnapshot ->
+                            var isPasswordCorrect = false
+
+                            // Iterate over all child nodes of "비밀번호"
+                            for (child in dataSnapshot.children) {
+                                val savedPassword = child.value as? String
+
+                                if (savedPassword != null) {
+                                    val decodedPassword = String(Base64.decode(savedPassword, Base64.DEFAULT)).trim()
+
+                                    // Check if the decoded password matches the user's password
+                                    if (decodedPassword == password) {
+                                        isPasswordCorrect = true
+                                        break
+                                    }
+                                }
+                            }
+
+                            if (isPasswordCorrect) {
+                                //deleteBtn 클릭했을 때 DB에서 삭제
+                                val intent1 = Intent(this@MainActivity, UploadActivity::class.java)
+                                startActivity(intent1)
+                            } else {
+                                Toast.makeText(applicationContext, "비밀번호가 잘못되었습니다", Toast.LENGTH_SHORT).show()
+                            }
+                        }.addOnFailureListener {
+                            Toast.makeText(applicationContext, "비밀번호 확인에 실패했습니다", Toast.LENGTH_SHORT).show()
                         }
                         dialog.dismiss()
                     }

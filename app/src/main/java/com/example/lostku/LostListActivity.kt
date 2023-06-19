@@ -46,16 +46,16 @@ class LostListActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false )
         rdb = Firebase.database.getReference("Lost/info") //Lost DB에 info 테이블 생성 후 참조
         pdb = Firebase.database.getReference("PW")
-        pdb.child("비밀번호").setValue("Mjg1Ng==")//총학생회
-        pdb.child("비밀번호").setValue("MzQ5Mgo=")//건국문학예술학생연합
-        pdb.child("비밀번호").setValue("MzQ5NQ==")//동아리연합회
-        pdb.child("비밀번호").setValue("NDY1Ng==")//학생복지위원회
-        pdb.child("비밀번호").setValue("NTI1Nw==")//문과대학학생회
-        pdb.child("비밀번호").setValue("NTQ3OA==")//이과대학학생회
-        pdb.child("비밀번호").setValue("NjI1OQ==")//건축대학학생회
-        pdb.child("비밀번호").setValue("Njk4Mg==")//공과대학학생회
-        pdb.child("비밀번호").setValue("NzU1NA==")//사회과학대학학생회
-        pdb.child("비밀번호").setValue("NzcxMw==")//융합과학기술원학생회
+//        pdb.child("비밀번호").setValue("Mjg1Ng==")//총학생회
+//        pdb.child("비밀번호").setValue("MzQ5Mgo=")//건국문학예술학생연합
+//        pdb.child("비밀번호").setValue("MzQ5NQ==")//동아리연합회
+//        pdb.child("비밀번호").setValue("NDY1Ng==")//학생복지위원회
+//        pdb.child("비밀번호").setValue("NTI1Nw==")//문과대학학생회
+//        pdb.child("비밀번호").setValue("NTQ3OA==")//이과대학학생회
+//        pdb.child("비밀번호").setValue("NjI1OQ==")//건축대학학생회
+//        pdb.child("비밀번호").setValue("Njk4Mg==")//공과대학학생회
+//        pdb.child("비밀번호").setValue("NzU1NA==")//사회과학대학학생회
+//        pdb.child("비밀번호").setValue("NzcxMw==")//융합과학기술원학생회
         val query = rdb.limitToLast(50) //최근 50개 가져오는 쿼리
         photoDialog = ShowPhotoDialog(this)
 
