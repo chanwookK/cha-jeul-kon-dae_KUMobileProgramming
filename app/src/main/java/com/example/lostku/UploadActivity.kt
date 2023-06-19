@@ -48,6 +48,17 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
+
+    val selectImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            binding.imageView.visibility = View.VISIBLE
+            binding.imageView.setImageURI(uri)
+            imageURI = uri
+            isImgSubmitted = true
+            setGalleyText(true)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
@@ -134,10 +145,11 @@ class UploadActivity : AppCompatActivity() {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-
     private fun submitImg() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+
+        selectImageContract.launch("image/*")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
