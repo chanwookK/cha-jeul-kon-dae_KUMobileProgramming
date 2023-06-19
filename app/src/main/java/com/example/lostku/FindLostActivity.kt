@@ -37,36 +37,26 @@ class FindLostActivity : AppCompatActivity() {
     lateinit var googleMap: GoogleMap
     var loc = LatLng(37.554752, 126.970631)
 
-    //서울역
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationRequest2: LocationRequest
     lateinit var locationCallback: LocationCallback
 
     var startupdate = false
-    var flag = 0
-
     val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
-
     val gpeSettingLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (checkGPSProvider()) {
-                //getLastLocation()
-                //setCurrentLocation(loc)
                 startLocationUpdate()
             } else {
-                //val intent1 = Intent(this@FindLostActivity,MainActivity::class.java)
-                //startActivity(intent1)
                 setCurrentLocation(loc)
-                //initLocation()
             }
         }
-
     val locationPermissionRequest =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -77,96 +67,47 @@ class FindLostActivity : AppCompatActivity() {
                             android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             false
                         ) -> {
-                    //getLastLocation()
                     startLocationUpdate()
-
-                   // val intent1 = Intent(this@FindLostActivity,MainActivity::class.java)
-                 //   startActivity(intent1)
-                    //showPermissionRequestDlg()
-                    //showGPSSetting()
                 }
-
                 else -> {
-//                    //showGPSSetting()
-//                    //setCurrentLocation(loc)
-//                    if(ContextCompat.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) !startupdate){
-//                        //showGPSSetting()
-//                        setCurrentLocation(loc)
-//                    }else{
-//                       showGPSSetting()
-//                    }
-                    //locationPermissionRequest.launch(permissions)
-                    //startLocationUpdate()
-
-                    //startLocationUpdate()
-                    //startLocationUpdate()
-
-                    //startLocationUpdate()
-                    setCurrentLocation(loc)
-                    //showGPSSetting()
-                    //initstart()
-                    //chekcout()
+                    //권한이 거부되었을 때 MainActivity로 이동
+                    Toast.makeText(this, "위치 권한 설정을 해주세요!",Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }
-
-
             }
         }
-
-
 
     var LData: ArrayList<SaveLocation> = ArrayList()
     var cur_lat: Double? = loc.latitude
     var cur_lon: Double? = loc.longitude
-
-
     private fun checkFineLocationPermission(): Boolean {
         return ActivityCompat.checkSelfPermission(
             this,
             android.Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
-
     private fun checkCoarseLocationPermission(): Boolean {
         return ActivityCompat.checkSelfPermission(
             this,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFindLostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //makeTable()
         initstart()
-
-        //initLocation()
-        //initLayout()
     }
     private fun initstart(){
-        //showGPSSetting()
         initLocation()
-        //startLocationUpdate()
-        //showPermissionRequestDlg()
-        //showGPSSetting()
-       // initLocation()
     }
 
-//    private fun initmap(){
-//        val mapFragment = supportFragmentManager
-//            .findFragmentById(R.id.map) as SupportMapFragment
-//        mapFragment.getMapAsync{
-//            googleMap = it
-//            initLocation()
-//        }
-//    }
 
     fun initLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
             .setMinUpdateIntervalMillis(5000).build()
-//        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
-//            .setMinUpdateIntervalMills(5000).build()
         locationRequest2 = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000)
             .setMinUpdateIntervalMillis(5000).build()
 
@@ -178,31 +119,22 @@ class FindLostActivity : AppCompatActivity() {
                     location.locations[location.locations.size-1].longitude
                 )
                 setCurrentLocation(loc)
-                //Log.i("location","LocationCallback()")
             }
         }
-        //getLastLocation()
     }
-
     override fun onResume() {
         super.onResume()
-        //Log.i("location","onResume()")
         if(!startupdate)
             startLocationUpdate()
     }
-
     override fun onPause() {
         super.onPause()
-      //  Log.i("location","onPause()")
         stopLocationUpdate()
     }
-
     private fun stopLocationUpdate(){
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         startupdate = false
-        //Log.i("location","stopLocationUpdate()")
     }
-
     private fun startLocationUpdate(){
         when{
             checkFineLocationPermission() -> {
@@ -213,23 +145,14 @@ class FindLostActivity : AppCompatActivity() {
                     fusedLocationProviderClient.requestLocationUpdates(
                         locationRequest, locationCallback, Looper.getMainLooper()
                     )
-                   // Log.i("location","startLocationUpdates()")
                 }
             }
-
-
             checkCoarseLocationPermission() -> {
-
                     startupdate = true
                     fusedLocationProviderClient.requestLocationUpdates(
                         locationRequest2, locationCallback, Looper.getMainLooper()
                     )
-                    //Log.i("location2", "startLocationUpdates()")
-
-
             }
-
-
             ActivityCompat.shouldShowRequestPermissionRationale(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) -> {
                 //startLocationUpdate()
@@ -241,31 +164,18 @@ class FindLostActivity : AppCompatActivity() {
                 //showGPSSetting()
                 locationPermissionRequest.launch(permissions)
             }
-
         }
-
     }
-
     fun setCurrentLocation(location: LatLng) {
-
             cur_lat = loc.latitude
             cur_lon = loc.longitude
             initlists()
             makeTable()
-
-
-
-
     }
-
-
-
-
     private fun checkGPSProvider(): Boolean {
         val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         return (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
     }
-
     private fun showGPSSetting() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("위치 서비스 비활성화")
@@ -276,22 +186,14 @@ class FindLostActivity : AppCompatActivity() {
         builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
             val GpsSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             gpeSettingLauncher.launch(GpsSettingIntent)
-            //locationPermissionRequest.launch(permissions)
-            //showPermissionRequestDlg()
-            //startLocationUpdate()
-
-
         })
         builder.setNegativeButton("취소",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.dismiss()
-
-                //setCurrentLocation(loc)
-                //val intent1 = Intent(this@FindLostActivity,MainActivity::class.java)
-                //startActivity(intent1)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             })
         builder.create().show()
-
     }
 
     private fun showPermissionRequestDlg() {
@@ -302,34 +204,17 @@ class FindLostActivity : AppCompatActivity() {
                     "기기의 위치를 제공하도록 설정하시겠습니까?"
         )
         builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
-            //val GpsSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            //gpeSettingLauncher.launch(GpsSettingIntent)
             locationPermissionRequest.launch(permissions)
-            //val GpsSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            //gpeSettingLauncher.launch(GpsSettingIntent)
-
         })
         builder.setNegativeButton("취소",
             DialogInterface.OnClickListener { dialog, id ->
                 dialog.dismiss()
-                //setCurrentLocation(loc)
-                //val intent1 = Intent(this@FindLostActivity,MainActivity::class.java)
-                //startActivity(intent1)
-
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             })
         builder.create().show()
-
-
     }
-
-
-
-
-
-
         fun makeTable() {
-            //initLocation()
-
             LData.sortBy { it.location }
             val tableLayout = binding.tableLayout
             for (address in LData) {
@@ -344,37 +229,25 @@ class FindLostActivity : AppCompatActivity() {
                 textView2.setBackgroundResource(R.drawable.tableline)
                 tableRow.addView(textView1)
                 tableRow.addView(textView2)
-
                 tableLayout.addView(tableRow)
             }
         }
-
         fun ClearTable() {
-
-
             val tableLayout = binding.tableLayout
-            //tableLayout.removeAllViews()
             tableLayout.removeViews(1, tableLayout.childCount - 1)
-
         }
-
         fun initlists() {
             ClearTable()
             LData.removeAll(LData)
             val scan = Scanner(resources.openRawResource(R.raw.lists))
-
             while (scan.hasNextLine()) {
                 val name = scan.nextLine()
-
                 val location1 = scan.nextLine().toDouble()
                 val location2 = scan.nextLine().toDouble()
                 var location3 = haversine(cur_lat!!, cur_lon!!, location1, location2)
                 LData.add(SaveLocation(name, location3.toInt()))
 
             }
-            //Toast.makeText(this, "Latitude: $cur_lat, Longitude: $cur_lon", Toast.LENGTH_SHORT)
-              //  .show()
-            //makeTable()
         }
 
     fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
