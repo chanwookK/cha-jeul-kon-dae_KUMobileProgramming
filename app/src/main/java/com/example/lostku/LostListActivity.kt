@@ -1,9 +1,17 @@
 package com.example.lostku
 
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
@@ -55,9 +63,47 @@ class LostListActivity : AppCompatActivity() {
         adapter = LostRecyclerViewAdapter(option)
         adapter.itemClickListener = object :LostRecyclerViewAdapter.OnItemClickListener{
             override fun OnItemClick(position: Int, data :LostData) {
-                //deleteBtn 클릭했을 때 DB에서 삭제
-                rdb.child(data.id.toString()).removeValue()
+                // Create a layout to hold the EditText
+                val layout = FrameLayout(this@LostListActivity)
+                val pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250f, resources.displayMetrics).toInt() // DP를 Pixel로 변환
+                val input = EditText(this@LostListActivity).apply {
+                    layoutParams = FrameLayout.LayoutParams(
+                        pixels, // Width
+                        FrameLayout.LayoutParams.WRAP_CONTENT  // Height
+                    ).apply {
+                        gravity = Gravity.CENTER // Center the EditText in the AlertDialog
+                    }
+                    inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                }
+                layout.addView(input)
 
+                // Create AlertDialog with custom view
+                val dialog = android.app.AlertDialog.Builder(this@LostListActivity)
+                    .setTitle("비밀번호 입력")
+                    .setMessage("비밀번호를 입력하세요")
+                    .setView(layout)
+                    .setPositiveButton("확인") { dialog, _ ->
+                        // 비밀번호를 처리하는 코드
+                        val password = input.text.toString()
+                        // 비밀번호 확인
+                        if (password == "1234") {  // 실제 비밀번호로 변경
+                            //deleteBtn 클릭했을 때 DB에서 삭제
+                            rdb.child(data.id.toString()).removeValue()
+                        } else {
+                            Toast.makeText(applicationContext, "비밀번호가 잘못되었습니다", Toast.LENGTH_SHORT).show()
+                        }
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("취소") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .create()
+
+                // Set AlertDialog background color to light grey
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.argb(200, 200, 200, 200)))
+
+                // Show the AlertDialog
+                dialog.show()
             }
 
             override fun OnPhotoClick(position: Int, data: LostData) {
