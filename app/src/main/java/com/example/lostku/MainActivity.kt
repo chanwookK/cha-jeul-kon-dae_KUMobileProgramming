@@ -138,11 +138,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(i)
 
             }
-            R.id.infoBtn ->{
-                val i = Intent(this@MainActivity, InfoActivity::class.java)
-                startActivity(i)
-
-            }
             R.id.drawer ->{
                 isDrawerOpen =! isDrawerOpen
                 if(isDrawerOpen)
