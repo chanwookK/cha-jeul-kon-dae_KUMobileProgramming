@@ -133,11 +133,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
-            R.id.keywordAlarmBtn ->{
-                val i = Intent(this@MainActivity, KeywordActivity::class.java)
-                startActivity(i)
-
-            }
+//            R.id.keywordAlarmBtn ->{
+//                val i = Intent(this@MainActivity, KeywordActivity::class.java)
+//                startActivity(i)
+//
+//            }
             R.id.drawer ->{
                 isDrawerOpen =! isDrawerOpen
                 if(isDrawerOpen)
