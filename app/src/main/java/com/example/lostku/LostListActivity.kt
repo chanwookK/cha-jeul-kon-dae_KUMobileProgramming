@@ -106,9 +106,10 @@ class LostListActivity : AppCompatActivity() {
 
                                 if (savedPassword != null) {
                                     val decodedPassword = String(Base64.decode(savedPassword, Base64.DEFAULT)).trim()
+                                    val check = data.password
 
                                     // Check if the decoded password matches the user's password
-                                    if (decodedPassword == password) {
+                                    if (decodedPassword == password && check==password) {
                                         isPasswordCorrect = true
                                         break
                                     }
