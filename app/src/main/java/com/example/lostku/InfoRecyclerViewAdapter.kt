@@ -28,11 +28,7 @@ class InfoRecyclerViewAdapter (var items:ArrayList<InfoData>): RecyclerView.Adap
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //변수에다가 각각의 값들을 매핑하고 리사이클뷰에 보여줌
-        if(position == 0){
-            holder.binding.union.setBackgroundResource(R.drawable.keyword_background)
-            holder.binding.location.setBackgroundResource(R.drawable.keyword_background)
-        }
+        //변수에다가 각각의 값들을 매핑하고 리사이클뷰에 보여
         holder.binding.union.text = items[position].union
         holder.binding.location.text = items[position].location
 

@@ -7,22 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lostku.databinding.RowKeywordBinding
 
 class KeywordRecyclerViewAdapter(var items:ArrayList<KeywordData>): RecyclerView.Adapter<KeywordRecyclerViewAdapter.ViewHolder>() {
+    var keyNum = 0;
 
-    interface OnItemClickListener {
-        //어댑터에서 몇번쨰 무엇을 클릭했는지 정보를 넘겨줄 수 있음, 넘겨줄 수 있는 데이터들을 인자를 통해 전달 가능
-        fun OnItemClick(data: KeywordData, i: Int)
+    interface  OnItemClickListener{
+        fun OnItemClick(position: Int)
 
     }
 
-    var itemClickListener: OnItemClickListener? = null
-
-
+    var itemClickListener:OnItemClickListener?=null
     inner class ViewHolder(val binding: RowKeywordBinding) : RecyclerView.ViewHolder(binding.root) {
         //OnItemClick 함수를 호출하는 위치
         init {
             binding.keywordDeleteBtn.setOnClickListener {
                 removeItem(adapterPosition)
+                keyNum--
+                itemClickListener!!.OnItemClick(adapterPosition)
+
             }
+
+
         }
     }
 
