@@ -9,8 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.lostku.databinding.RowLostBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+
 
 class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
     : FirebaseRecyclerAdapter<LostData,LostRecyclerViewAdapter.ViewHolder>(options){

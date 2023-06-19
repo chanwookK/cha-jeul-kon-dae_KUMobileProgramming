@@ -20,10 +20,11 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/custom_fontfamily"
             android:padding="30dp"
+            android:text="개발자 정보"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="개발자 정보" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView7"
@@ -71,9 +72,10 @@
             android:id="@+id/AppTitle"
             android:layout_width="wrap_content"
             android:layout_height="79dp"
+            android:fontFamily="@font/custom_fontfamily"
             android:text="찾을건대"
+            android:textColor="@color/black"
             android:textSize="60sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +86,9 @@
             android:id="@+id/ListBtn"
             android:layout_width="150dp"
             android:layout_height="60dp"
+            android:fontFamily="@font/custom_fontfamily"
             android:text="분실물 찾기"
+
             app:layout_constraintBottom_toTopOf="@+id/FindBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +100,7 @@
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:text="분실물 발견"
+            android:fontFamily="@font/custom_fontfamily"
             app:layout_constraintBottom_toTopOf="@+id/UploadBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +112,7 @@
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:text="분실물 등록"
+            android:fontFamily="@font/custom_fontfamily"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
