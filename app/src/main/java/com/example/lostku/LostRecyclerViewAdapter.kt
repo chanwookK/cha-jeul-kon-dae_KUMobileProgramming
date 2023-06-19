@@ -53,6 +53,7 @@ class LostRecyclerViewAdapter(options : FirebaseRecyclerOptions<LostData>)
             //photo.text = model.photo
             Glide.with(holder.itemView).load(model.photo.toUri()).into(photo)
 
+            Log.i("","password : "+model.password)
 
 //            val storageRef = Firebase.storage.reference
 //            val imageName = "Lost_"+model.id.toString()+".png"
