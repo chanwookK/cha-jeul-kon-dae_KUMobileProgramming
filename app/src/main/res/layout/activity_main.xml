@@ -57,8 +57,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="218dp"
+            android:layout_width="300dp"
+            android:layout_height="205dp"
             android:layout_marginStart="46dp"
             android:layout_marginEnd="46dp"
             app:layout_constraintBottom_toTopOf="@+id/ListBtn"
@@ -66,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/AppTitle"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/img" />
+            app:srcCompat="@drawable/imgicon" />
 
         <TextView
             android:id="@+id/AppTitle"
